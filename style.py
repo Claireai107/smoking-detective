@@ -9,18 +9,22 @@ _CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=Special+Elite&display=swap');
 
 /* ===== 폰트 ===== */
-/* 본문·작은 글씨·위젯·표 = 맑은 고딕 (선명하게) */
-html, body, .stApp, .stMarkdown, p, li, span, label,
-[data-testid="stCaptionContainer"], [data-testid="stMetricLabel"],
-[data-testid="stMetricValue"], [data-testid="stWidgetLabel"],
-.stSelectbox, .stSlider, .stRadio, .stMultiSelect, .stCheckbox,
-table, th, td, button, input {
+/* 본문·작은 글씨·표 = 맑은 고딕 (선명하게). span/위젯컨테이너는 제외 → 아이콘 안 깨지게 */
+.stApp, .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown td, .stMarkdown th,
+p, label, [data-testid="stCaptionContainer"], [data-testid="stMetricLabel"],
+[data-testid="stMetricValue"], [data-testid="stWidgetLabel"] p,
+table, th, td, input, textarea {
     font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', '맑은 고딕', sans-serif !important;
 }
 /* 제목·히어로만 명조 유지 */
 h1, h2, h3, .detective-hero h1 { font-family: 'Nanum Myeongjo', serif !important; letter-spacing:.3px; }
 /* 판결 스탬프는 타자기 폰트 */
 .stamp { font-family: 'Special Elite', monospace !important; }
+/* ⚠️ Material 아이콘 폰트는 절대 덮어쓰지 않기 (안 그러면 'arrow_drop_down' 같은 글자가 보임) */
+[data-testid="stIconMaterial"], span[data-testid="stIconMaterial"],
+.material-symbols-rounded, .material-symbols-outlined, [class*="material-symbols"] {
+    font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', 'Material Icons' !important;
+}
 
 /* 작은 글씨 크기/줄간격 보정 (너무 작아 깨져보이지 않게) */
 .stMarkdown p, li, label { font-size: 0.95rem; line-height: 1.65; }
