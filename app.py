@@ -8,8 +8,10 @@ st.navigation 으로 여러 페이지의 메뉴를 직접 구성합니다.
 """
 
 import streamlit as st
+from style import inject_css
 
 st.set_page_config(page_title="흡연 탐정 🕵️", page_icon="🕵️", layout="wide")
+inject_css()
 
 pg = st.navigation([
     st.Page("home.py", title="수사하기", icon="🕵️", default=True),

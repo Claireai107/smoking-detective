@@ -7,9 +7,9 @@ import streamlit as st
 import matplotlib.pyplot as plt
 
 from helpers import load_data, train_model, compute_associations, roc_auc, FORMULA
+from style import hero
 
-st.title("📖 측정 원리")
-st.write("흡연 탐정이 **어떤 조사 → 어떤 분석 → 어떤 모델**로 흡연을 간파하는지 설명합니다.")
+hero("📖 수사 기법", "탐정은 어떤 분석으로 진실에 도달하는가.", "🔎")
 st.caption("ℹ️ 이 페이지는 전체 데이터 기준입니다 (필터 영향 없음).")
 
 df = load_data()

@@ -7,15 +7,16 @@ import pandas as pd
 import streamlit as st
 
 from helpers import load_data, train_model, roc_auc
+from style import hero, stamp
 
 df = load_data()
 model = train_model(df)
 _, _, auc = roc_auc(df)
 
 # ── 헤더 ──
-st.title("🕵️ 흡연 탐정")
-st.write("신체검사 수치만으로 흡연 여부를 간파합니다. 용의자 정보를 입력하고 **수사 개시**를 눌러보세요.")
-st.caption(f"🏅 이 탐정의 정확도(AUC) **{auc:.2f}** · 작동 원리는 왼쪽 메뉴 📖 **측정 원리** 참고")
+hero("🕵️ 흡연 탐정",
+     "신체검사 수치만으로 흡연을 간파한다. 용의자 정보를 입력하고 <b>수사 개시</b>를 누르시오.", "🔍")
+st.caption(f"🏅 이 탐정의 검거 정확도(AUC) **{auc:.2f}** · 작동 원리는 왼쪽 메뉴 📖 **측정 원리**")
 
 # ── 세션 초기화 (결과를 기억해 두는 공간) ──
 if "verdict" not in st.session_state:
@@ -52,6 +53,8 @@ if submitted:
     if in_trig >= smk["triglyceride"].median():
         cues.append(f"중성지방 {in_trig}↑")
     st.session_state.verdict = {"score": score, "cues": cues}
+    if score < 0.35:
+        st.balloons()  # 무혐의 축하 효과
 
 # ── 결과 표시 (폼 밖 · 세션값이라 다른 조작에도 유지) ──
 v = st.session_state.verdict
@@ -59,14 +62,17 @@ if v is not None:
     pct = v["score"] * 100
     st.divider()
     with st.container(border=True):
-        st.markdown("### ▶ 수사 결과")
+        st.markdown("### 🗂️ 수사 결과")
         st.progress(min(max(v["score"], 0.0), 1.0))
         if pct >= 60:
-            st.error(f"🚨 흡연 의심도 **{pct:.0f}%** — 검거! 빼박입니다 🚬")
+            st.markdown(stamp("검거 · GUILTY", "#ff4b4b", alarm=True), unsafe_allow_html=True)
+            st.markdown(f"#### 🚨 흡연 의심도 {pct:.0f}% — 빼박입니다 🚬")
         elif pct >= 35:
-            st.warning(f"🟡 흡연 의심도 **{pct:.0f}%** — 요주의 인물")
+            st.markdown(stamp("요주의 · SUSPECT", "#e0b13a"), unsafe_allow_html=True)
+            st.markdown(f"#### 🟡 흡연 의심도 {pct:.0f}% — 요주의 인물")
         else:
-            st.success(f"✅ 흡연 의심도 **{pct:.0f}%** — 무혐의")
+            st.markdown(stamp("무혐의 · CLEARED", "#2ec27e"), unsafe_allow_html=True)
+            st.markdown(f"#### ✅ 흡연 의심도 {pct:.0f}% — 무혐의")
         if v["cues"]:
             st.caption("🔬 결정적 증거(흡연자 패턴과 일치): " + " · ".join(v["cues"]))
         else:

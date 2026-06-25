@@ -18,6 +18,20 @@ for _cand in ["Malgun Gothic", "NanumGothic", "AppleGothic", "DejaVu Sans"]:
         break
 plt.rcParams["axes.unicode_minus"] = False
 
+# 차트도 누아르 테마에 맞게 어둡게
+plt.rcParams.update({
+    "figure.facecolor": "#14141f",
+    "axes.facecolor": "#1b1b2b",
+    "savefig.facecolor": "#14141f",
+    "text.color": "#e8e8e8",
+    "axes.labelcolor": "#e8e8e8",
+    "axes.titlecolor": "#f5d77a",
+    "xtick.color": "#cfcfe0",
+    "ytick.color": "#cfcfe0",
+    "axes.edgecolor": "#555",
+    "grid.color": "#333",
+})
+
 # 분석으로 고른 '강한 흡연 신호' + 성별(C로 범주 처리)
 NUM_FEATURES = ["hemoglobin", "Gtp", "triglyceride", "HDL"]
 FORMULA = "smoking ~ hemoglobin + Gtp + triglyceride + HDL + C(gender)"

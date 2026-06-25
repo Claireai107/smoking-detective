@@ -10,11 +10,11 @@ import seaborn as sns
 from scipy import stats
 
 from helpers import load_data, compute_associations, fmt_p
+from style import hero
 
 df = load_data()
 
-st.title("📊 데이터 탐험")
-st.write("약 5.5만 명의 검진 데이터로 흡연과 신체신호의 관계를 살펴보세요.")
+hero("📊 사건 자료실", "5.5만 건의 검진 기록을 파헤쳐 흡연의 단서를 찾는다.", "🗂️")
 
 # ── 필터 (본문 상단) ──
 with st.expander("🔧 데이터 필터", expanded=True):
