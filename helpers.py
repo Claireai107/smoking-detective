@@ -89,5 +89,6 @@ def roc_auc(df):
     ths = np.linspace(0, 1, 101)
     tpr = [((proba >= t) & (y == 1)).sum() / max((y == 1).sum(), 1) for t in ths]
     fpr = [((proba >= t) & (y == 0)).sum() / max((y == 0).sum(), 1) for t in ths]
-    auc = float(np.trapezoid(sorted(tpr), sorted(fpr)))
+    _trapz = getattr(np, "trapezoid", None) or np.trapz  # NumPy 2.0+ / 이전 버전 모두 대응
+    auc = float(_trapz(sorted(tpr), sorted(fpr)))
     return fpr, tpr, auc
