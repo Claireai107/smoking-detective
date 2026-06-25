@@ -6,11 +6,16 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 from scipy import stats
 import statsmodels.formula.api as smf
 
-# 한글 깨짐 방지 (이 모듈을 import 하면 폰트가 한 번에 설정됨)
-plt.rcParams["font.family"] = "Malgun Gothic"
+# 한글 깨짐 방지 — 윈도우(Malgun Gothic)·배포 리눅스(NanumGothic) 모두 대응
+_available = {f.name for f in fm.fontManager.ttflist}
+for _cand in ["Malgun Gothic", "NanumGothic", "AppleGothic", "DejaVu Sans"]:
+    if _cand in _available:
+        plt.rcParams["font.family"] = _cand
+        break
 plt.rcParams["axes.unicode_minus"] = False
 
 # 분석으로 고른 '강한 흡연 신호' + 성별(C로 범주 처리)
