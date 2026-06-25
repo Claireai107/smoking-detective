@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Streamlit secrets (있다면 비공개)
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
